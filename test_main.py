@@ -4,4 +4,4 @@ def test_root():
     client = app.test_client()
     response = client.get("/")
     assert response.status_code == 200
-    assert b"Практическа работа 12 ci/cd" in response.data
+    assert "Практическа работа 12 ci/cd" in response.text
