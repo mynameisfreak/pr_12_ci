@@ -11,7 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Проверка наличия строки "Hello world"
+      - name: Display contents of text1.txt
+        run: cat text1.txt
+      - name: Display contents of text2.txt
+        run: cat text2.txt
+      - name: Check for "Hello world" in files
         run: cat text1.txt text2.txt | grep -q 'Hello world'
 
   package:
@@ -19,13 +23,12 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v4
-      - name: Архивация файлов
+      - name: Display contents before packaging
+        run: cat text1.txt text2.txt
+      - name: Create compressed package
         run: cat text1.txt text2.txt | gzip > packaged.gz
-      - name: Загрузка артефакта
+      - name: Upload packaged artifact
         uses: actions/upload-artifact@v4
         with:
           name: packaged
           path: packaged.gz
-  artifacts:
-    paths:
-      - packaged.gz
